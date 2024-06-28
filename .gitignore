@@ -1,1 +1,4 @@
 *.gz
+*.Rhistory
+/Gingerbreadman/shiny.io # Shiny app
+/Gingerbreadman/shiny/*  # Shiny web app config

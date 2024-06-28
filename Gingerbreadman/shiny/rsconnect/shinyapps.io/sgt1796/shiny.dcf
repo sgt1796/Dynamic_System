@@ -1,0 +1,10 @@
+name: shiny
+title:
+username: sgt1796
+account: sgt1796
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12249420
+bundleId: 8801193
+url: https://sgt1796.shinyapps.io/shiny/
+version: 1

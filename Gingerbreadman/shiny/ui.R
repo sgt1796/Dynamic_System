@@ -1,3 +1,5 @@
+library(plotly)
+
 ui <- fluidPage(
   titlePanel("Interactive Orbits of Dynamic Systems"),
   sidebarLayout(
