@@ -28,7 +28,7 @@ The repository will be updated with additional scripts to cover various other dy
 - Julia set
 - Logistic map
 - Henon map
-
+- Perhaps an abstraction for analyzing customized 1D/2D mappings (within a reasonable assumptions...)
 ## Requirements
 
 - R
