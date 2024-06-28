@@ -1,5 +1,5 @@
-*.gz
-*.Rhistory
+**/*.gz
+**/*.Rhistory
 
 # Shiny app and config
 /Gingerbreadman/shiny
