@@ -94,7 +94,7 @@ result <- iterate_functions(initial_points, iterations, functions)
 
 
 ### Dynamic System Animation
-![Dynamic System Animation](screenshots/unkown1.gif)
+![Dynamic System Animation](screenshots/unknown1.gif)
 
 ## TODO
 
