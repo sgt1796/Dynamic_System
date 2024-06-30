@@ -1,127 +1,73 @@
-## Load specific functions from a file
+library(tidyverse)
+
+# Load specific functions from a file
 load_functions <- function(func_names, file = "mappings.R") {
-  # Source the file in a local environment
   env <- new.env()
   source(file, local = env)
+  func_list <- as.list(env) %>%
+    keep(is.function)
   
-  # Load all functions if "ALL" is specified
   if ("ALL" %in% func_names) {
-    func_list <- as.list(env)
-    names(func_list) <- func_names
     return(func_list)
   }
   
-  # Handle single function name
-  if (is.character(func_names) && length(func_names) == 1) {
-    if (exists(func_names, envir = env)) {
-      func_list <- list(get(func_names, envir = env))
-      names(func_list) <- func_names
-      return(func_list)
-    } else {
-      stop(paste("Function", func_names, "not found in", file))
-    }
+  func_list <- func_list[func_names]
+  
+  if (any(sapply(func_list, is.null))) {
+    missing_funcs <- func_names[is.na(match(func_names, names(func_list)))]
+    stop(paste("Function(s)", paste(missing_funcs, collapse = ", "), "not found in", file))
   }
   
-  # Initialize a list to store the functions
-  func_list <- list()
-  
-  # Get each function from the environment
-  for (func_name in func_names) {
-    if (exists(func_name, envir = env)) {
-      func_list[[func_name]] <- get(func_name, envir = env)
-    } else {
-      stop(paste("Function", func_name, "not found in", file))
-    }
-  }
-  # Set names of the list elements to the function names
-  names(func_list) <- func_names
   return(func_list)
 }
-# Apply each function in the list to each (x, y) pair in the data list
-apply_functions <- function(data_list, functions) {
-  if (is.function(functions)) {
-    functions <- list(functions)
-  }
-  
-  results <- list()
-  
-  for (func_name in names(functions)) {
-    if (func_name %in% names(data_list)) {
-      current_data <- data_list[[func_name]]
-      func <- functions[[func_name]]
-      result <- lapply(current_data, function(data) func(data$x, data$y))
-      results[[func_name]] <- result
-    }
-  }
-  
-  return(results)
-}
 
-# Function to apply a list of mapping functions iteratively
-iterate_mappings <- function(x0, y0, iterations, mappings) {
-  # Initialize the data_list with initial points
-  data_list <- list()
-  for (func_name in names(mappings)) {
-    data_list[[func_name]] <- lapply(seq_along(x0), function(i) list(x = x0[i], y = y0[i], n = i))
-  }
-  
-  # Initialize a data frame to store the results
+# Apply each function in the list to each n-dimensional point in the data list
+apply_functions <- function(data_list, functions) {
   results <- data.frame()
   
-  for (iter in 1:iterations) {
-    data_list <- apply_functions(data_list, mappings)
-    
-    # Flatten the data_list and add to results
-    for (func_name in names(data_list)) {
-      for (i in seq_along(data_list[[func_name]])) {
-        results <- rbind(results, data.frame(
-          x = data_list[[func_name]][[i]]$x,
-          y = data_list[[func_name]][[i]]$y,
-          n = i,
-          mapping = func_name,
-          iteration = iter,
-          stringsAsFactors = FALSE
-        ))
-      }
+  for (func_name in names(functions)) {
+    if (func_name %in% unique(data_list$mapping)) {
+      current_data <- data_list %>% filter(mapping == func_name)
+      func <- functions[[func_name]]
+      
+      ## Need to change this one to a better way later
+      func_params <- intersect(names(formals(func)), c("x","y","z")) # Get the parameter names of the function
+      
+      result <- current_data %>%
+        rowwise() %>%
+        mutate(new_coords = list(do.call(func, as.list(across(all_of(func_params)))))) %>%
+        select(new_coords, mapping, n)%>%
+        unnest_wider(new_coords)
+      
+      results <- bind_rows(results, result)
     }
   }
   
   return(results)
 }
 
-
-# Example usage
-
-# Initial values
-x0 = runif(40, -8, 8)
-y0 <- runif(40, -8, 8)
-iterations <- 300
-
-# List of mapping function names
-mapping_names <- c("gingerbreadman", "rotation")
-# mapping_names = "rotation"
-
-# File containing the mapping functions
-file <- "mappings.R"
-
-# Load the mapping functions
-mappings <- load_functions(mapping_names, file)
-
-# Apply the mappings
-result <- iterate_mappings(x0, y0, iterations, mappings)
-
-# Plot the result
-library(ggplot2)
-# Adjust the plot with higher contrast and larger dots
-if (length(unique(result$mapping)) == 1) {
-  p <- ggplot(result, aes(x = x, y = y, color = factor(n), group = interaction(n, iteration)))
-} else {
-  p <- ggplot(result, aes(x = x, y = y, color = mapping, group = interaction(mapping, iteration)))
+# Function to apply a list of mapping functions iteratively to n-dimensional points
+iterate_functions <- function(initial_points, iterations, mapping_list) {
+  
+  data_list <- map_dfr(names(mapping_list), function(mapping_name) {
+        mutate(initial_points, mapping = mapping_name, n = row_number())
+    })
+  
+  
+  init <- data_list %>%
+    mutate(iteration = 0L) %>%
+    select(mapping, n, everything())
+  
+  results = tibble()
+  for (iter in seq_len(iterations)) {
+    data_list <- apply_functions(data_list, mapping_list)
+    data_list <- data_list %>%
+      mutate(iteration = iter)
+    results <- bind_rows(results, data_list)
+  }
+  param <- colnames(results)
+  init <- select(init, all_of(param))
+  results <- rbind(init, results)
+  
+  return(results)
 }
-
-p +
-  geom_point(size = 2, alpha = 0.8) + 
-  theme_minimal() + 
-  ggtitle("Iterated Function System") +
-  theme(legend.position = "none")
-
