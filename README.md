@@ -83,7 +83,7 @@ result <- iterate_functions(initial_points, iterations, functions)
 
 ### Gingerbreadman Map
 ![Gingerbreadman Map](screenshots/gingerbreadman1.png)
-![Gingerbreadman Map_high_res](Gingerbreadmap_Mapping.png)
+![Gingerbreadman Map_high_res](screenshots/Gingerbreadmap_Mapping.png)
 
 ### Lorenz Discrete Map
 ![Lorenz Discrete Map 1](screenshots/lorenz_discrete1.png)
