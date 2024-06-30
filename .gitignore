@@ -1,6 +1,9 @@
 **/*.gz
 **/*.Rhistory
 
-# Shiny app and config
+## Shiny app and config
 /Gingerbreadman/shiny
 Gingerbreadman/shiny.io
+
+## Shinyapp.io (online webpage)
+**/rsconnect/

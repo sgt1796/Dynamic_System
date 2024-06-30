@@ -3,7 +3,7 @@ library(tidyverse)
 # Load specific functions from a file
 load_functions <- function(func_names, file = "mappings.R") {
   env <- new.env()
-  source(file, local = TRUE)
+  source(file, local = env)
   func_list <- as.list(env) %>%
     keep(is.function)
   
@@ -48,12 +48,12 @@ apply_functions <- function(data_list, functions) {
 
 # Function to apply a list of mapping functions iteratively to n-dimensional points
 iterate_functions <- function(initial_points, iterations, mapping_list) {
+  print("start iterating functions...")
   
   data_list <- map_dfr(names(mapping_list), function(mapping_name) {
         mutate(initial_points, mapping = mapping_name, n = row_number())
     })
-  
-  
+
   init <- data_list %>%
     mutate(iteration = 0L) %>%
     select(mapping, n, everything())
@@ -68,6 +68,6 @@ iterate_functions <- function(initial_points, iterations, mapping_list) {
   param <- colnames(results)
   init <- select(init, all_of(param))
   results <- rbind(init, results)
-  
+  print("IFS done.")
   return(results)
 }
