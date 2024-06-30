@@ -79,9 +79,22 @@ functions <- load_functions("new_map", file = "custom_mappings.R")
 result <- iterate_functions(initial_points, iterations, functions)
 ```
 
-## License
+## Gallery
 
-This project is licensed under the GPL-3.0 License. See the [LICENSE](LICENSE) file for details.
+### Gingerbreadman Map
+![Gingerbreadman Map](screenshots/gingerbreadman1.png)
+![Gingerbreadman Map_high_res](Gingerbreadmap_Mapping.png)
+
+### Lorenz Discrete Map
+![Lorenz Discrete Map 1](screenshots/lorenz_discrete1.png)
+![Lorenz Discrete Map 2](screenshots/lorenz_discrete2.png)
+
+### Rossler Discrete Map
+![Rossler Discrete Map](screenshots/rossler_discrete1.png)
+
+
+### Dynamic System Animation
+![Dynamic System Animation](screenshots/unkown1.gif)
 
 ## TODO
 
@@ -89,5 +102,10 @@ This project is licensed under the GPL-3.0 License. See the [LICENSE](LICENSE) f
 - Implement Mandelbrot and Julia set generation.
 - Add range control for the web UI.
 - Enable switching variables for mapping functions.
+
+## License
+
+This project is licensed under the GPL-3.0 License. See the [LICENSE](LICENSE) file for details.
+
 
 Feel free to contribute to the project by adding new scripts, improving existing ones, or suggesting new features.
