@@ -55,9 +55,9 @@ clifford <- function(x, y, a = -1.4, b = 1.6, c = 1.0, d = 0.7) {
   return(list(x = xnew, y = ynew))
 }
 
-# Load functions and iterate
-functions <- load_functions(c("clifford"), file = "mappings.R")
-result <- iterate_functions(functions, n_iterations = 1000, x = 0, y = 0)
+# Load this Clifford and another map together and iterate
+functions <- load_functions(c("clifford", "rotation"), file = "mappings.R")
+result <- iterate_functions(initial_points, iterations, functions)
 ```
 
 ### Adding New Mapping Functions
@@ -75,8 +75,8 @@ new_map <- function(x, y, z, p = 1.2) {
 }
 
 # Save this function in a file (e.g., custom_mappings.R) and load it
-functions <- load_functions(c("new_map"), file = "custom_mappings.R")
-result <- iterate_functions(functions, n_iterations = 1000, x = 0, y = 0, z = 0)
+functions <- load_functions("new_map", file = "custom_mappings.R")
+result <- iterate_functions(initial_points, iterations, functions)
 ```
 
 ## License
