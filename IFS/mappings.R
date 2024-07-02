@@ -28,7 +28,7 @@ henon <- function(x, y, a = 1.4, b = 0.3) {
 # Logistic map function
 logistic <- function(x, r = 3.8) {
   xnew <- r * x * (1 - x)
-  return(list(x = xnew))
+  return(list(x = xnew, r = r))
 }
 
 # Arnold's cat map function
@@ -52,21 +52,20 @@ clifford <- function(x, y, a = -1.4, b = 1.6, c = 1.0, d = 0.7) {
   return(list(x = xnew, y = ynew))
 }
 
-# Lorenz attractor function
-lorenz_discrete <- function(x, y, z, dt = 0.01, sigma = 10, rho = 28, beta = 8/3) {
+# Discrete Lorenz attractor function
+lorenz_discrete <- function(x, y, z, dt = 0.02, sigma = 10, rho = 28, beta = 8/3) {
   dx <- dt * sigma * (y - x)
   dy <- dt * (x * (rho - z) - y)
   dz <- dt * (x * y - beta * z)
   return(list(x = x + dx, y = y + dy, z = z + dz))
 }
 
-# Rossler attractor function
-rossler <- function(x, y, z, a = 0.2, b = 0.2, c = 5.7) {
-  dx <- -y - z
-  dy <- x + a * y
-  dz <- b + z * (x - c)
-  return(list(dx = dx, dy = dy, dz = dz))
+
+# Discrete Rossler attractor function
+rossler_discrete <- function(x, y, z, a = 0.2, b = 0.2, c = 5.7, dt = 0.05) {
+  x_new <- x + dt * (-y - z)
+  y_new <- y + dt * (x + a * y)
+  z_new <- z + dt * (b + z * (x - c))
+  return(list(x = x_new, y = y_new, z = z_new))
 }
-
-
 
