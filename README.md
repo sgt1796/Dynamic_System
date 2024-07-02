@@ -81,7 +81,11 @@ result <- iterate_functions(initial_points, iterations, functions)
 
 ## Gallery
 
-### Gingerbreadman Map
+### 1-D
+#### Logistic Map
+![Logistic_lowRes](Logistic_iter=100_light.png)
+![Logistic_HighRes](Logistic_highres_1k_per_r.png)
+#### Gingerbreadman Map
 ![Gingerbreadman Map](screenshots/gingerbreadman1.png)
 ![Gingerbreadman Map_high_res](screenshots/Gingerbreadmap_Mapping.png)
 
