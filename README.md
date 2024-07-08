@@ -11,12 +11,12 @@ Dynamic systems and chaos theory explore the behavior of systems that evolve ove
 ### Current Scripts
 
 1. **Gingerbreadman Map**:
-   - **Description**: Visualizes the Gingerbreadman map, a type of chaotic map from R^2 to R^2. Generates orbits of the map using randomly generated starting points.
+   - **Description**: Visualizes the Gingerbreadman map, a type of chaotic map from R^2 to R^2 that has a signiture gingerbreadman-like chaotic region. Generates orbits of the map using randomly generated starting points.
    - **Dependencies**: `latex2exp`
    - **Location**: `Gingerbreadman/`
 
 2. **Iterated Function Systems (IFS)**:
-   - **Description**: Repeatedly applies a mapping function to visualize iterated function systems. Supports indefinite number of variable for higher dimensional mapping functions.
+   - **Description**: IFS repeatedly (or alternatingly) applies a mapping function to itself. Which is on common analysis and visualization method for dynamic systems. IFS supports indefinite number of variable for higher dimensional mapping functions.
    - **Dependencies**: `tidyverse`, `ggplot2`, `plotly`, `shiny`
    - **Location**: `IFS/`
    - **Shiny App**: An interactive UI is available in `IFS_shiny/` and can be accessed at [IFS Shiny App](https://sgt1796.shinyapps.io/IFS_shiny/)
@@ -81,19 +81,23 @@ result <- iterate_functions(initial_points, iterations, functions)
 
 ## Gallery
 
-### 1-D
+### 1-Dimension
 #### Logistic Map
 ![Logistic_lowRes](screenshots/Logistic_iter=100_light.png)
 ![Logistic_HighRes](screenshots/Logistic_highres_1k_per_r.png)
+
+### 2-Dimension
 #### Gingerbreadman Map
 ![Gingerbreadman Map](screenshots/gingerbreadman1.png)
 ![Gingerbreadman Map_high_res](screenshots/Gingerbreadmap_Mapping.png)
 
-### Lorenz Discrete Map
+
+### 3-Dimension
+#### Lorenz Discrete Map
 ![Lorenz Discrete Map 1](screenshots/lorenz_discrete1.png)
 ![Lorenz Discrete Map 2](screenshots/lorenz_discrete2.png)
 
-### Rossler Discrete Map
+#### Rossler Discrete Map
 ![Rossler Discrete Map](screenshots/rossler_discrete1.png)
 
 
@@ -106,6 +110,7 @@ result <- iterate_functions(initial_points, iterations, functions)
 - Implement Mandelbrot and Julia set generation.
 - Add range control for the web UI.
 - Enable switching variables for mapping functions.
+- (Maybe) Add support to IFS to alternatingly apply between different mappings
 
 ## License
 
