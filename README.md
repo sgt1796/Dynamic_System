@@ -16,7 +16,7 @@ Dynamic systems and chaos theory explore the behavior of systems that evolve ove
    - **Location**: `Gingerbreadman/`
 
 2. **Iterated Function Systems (IFS)**:
-   - **Description**: Repeatedly applies a mapping function to visualize iterated function systems. Supports 1-3 dimensional mappings with variables x, y, z. Users can add their own mapping functions.
+   - **Description**: Repeatedly applies a mapping function to visualize iterated function systems. Supports indefinite number of variable for higher dimensional mapping functions.
    - **Dependencies**: `tidyverse`, `ggplot2`, `plotly`, `shiny`
    - **Location**: `IFS/`
    - **Shiny App**: An interactive UI is available in `IFS_shiny/` and can be accessed at [IFS Shiny App](https://sgt1796.shinyapps.io/IFS_shiny/)
